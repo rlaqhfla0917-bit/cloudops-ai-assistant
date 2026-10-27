@@ -9,6 +9,7 @@ FastAPI 기반 클라우드 장애 분석 학습용 MVP입니다.
 - OpenAI 모델의 선택적 설명 생성
 - FastAPI 및 pytest 테스트
 - /docs 의 API 테스트 인터페이스
+- / 에서 시나리오별 진단 결과·로그·상태 지표를 확인하는 웹 화면
 
 ## 로컬 실행
 
@@ -16,7 +17,7 @@ Python 3.10 이상을 사용합니다.
 
 1. Install: python -m pip install -r requirements.txt
 2. Start: python -m uvicorn main:app --port 8501
-3. Open: http://127.0.0.1:8501/docs
+3. Open: http://127.0.0.1:8501/ (웹 데모) 또는 /docs (API 명세)
 4. Test: POST /api/analyze with scenario database, api, queue, or healthy
 5. Tests: python -m pytest -q
 
