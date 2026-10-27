@@ -3,7 +3,7 @@ from __future__ import annotations
 import os, re
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from pydantic import BaseModel
 
 app = FastAPI(title="CloudOps AI Assistant", version="1.0")
@@ -63,3 +63,5 @@ def analyze(req: Analyze):
  except ValueError as err: raise HTTPException(400,str(err))
 @app.get("/", response_class=HTMLResponse)
 def dashboard(): return (Path(__file__).parent/"index.html").read_text(encoding="utf-8")
+@app.get("/dashboard.js", include_in_schema=False)
+def dashboard_script(): return FileResponse(Path(__file__).parent/"dashboard.js", media_type="text/javascript")
