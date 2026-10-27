@@ -1,1 +1,55 @@
-<!doctype html><html lang="ko"><meta charset="utf-8"><title>CloudOps AI Assistant</title><body><h1>CloudOps AI Assistant</h1><p>Open API at /docs</p></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CloudOps AI Assistant | 장애 분석 데모</title>
+  <style>
+    :root { font-family: system-ui, "Noto Sans KR", sans-serif; color: #e9f2ff; background: #0a1424; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(circle at 90% 0%, #173d5c, transparent 45%), #0a1424; }
+    main { max-width: 1050px; margin: auto; padding: 42px 20px 72px; }
+    h1 { font-size: clamp(28px, 4vw, 42px); margin: 12px 0; letter-spacing: -.04em; }
+    h2 { font-size: 18px; margin: 0 0 12px; }
+    p { line-height: 1.7; color: #a9bdd5; }
+    a { color: #8fcbff; }
+    .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .16em; color: #64d9c7; }
+    .notice { border-left: 3px solid #64d9c7; padding: 10px 14px; margin: 22px 0; color: #c4d4e5; background: #13283b; border-radius: 4px 12px 12px 4px; }
+    .choices { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 24px 0; }
+    button { border: 1px solid #3a5470; color: #e9f2ff; background: #172b41; padding: 17px 10px; border-radius: 12px; cursor: pointer; font: inherit; font-weight: 700; transition: .15s ease; }
+    button:hover, button:focus-visible { border-color: #66d9c8; background: #22415c; outline-offset: 3px; }
+    button[aria-pressed="true"] { border-color: #64d9c7; background: #174b52; }
+    button:disabled { opacity: .65; cursor: wait; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .panel { background: #101f33; border: 1px solid #2a425e; border-radius: 16px; padding: 22px; min-width: 0; }
+    .wide { grid-column: 1 / -1; }
+    pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 14px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace; color: #d5e8f9; }
+    .tag { display: inline-block; border-radius: 50px; border: 1px solid #4a718c; padding: 4px 10px; font-size: 12px; margin: 0 0 12px; color: #78e6d6; }
+    #status { font-weight: 750; color: #fff; }
+    @media(max-width: 700px) { .choices { grid-template-columns: repeat(2, 1fr); } .grid { grid-template-columns: 1fr; } .wide { grid-column: auto; } }
+  </style>
+  <script src="/dashboard.js" defer></script>
+</head>
+<body>
+<main>
+  <div class="eyebrow">CLOUDOPS · INCIDENT LAB</div>
+  <h1>클라우드 장애 분석 데모</h1>
+  <p>가상 장애를 선택하면 상태 지표와 로그를 바탕으로 점검 순서를 제안합니다.</p>
+  <div class="notice">학습용 가상 데이터입니다. 실제 AWS·DB·Redis 환경과 연결되지 않으며 자동 복구를 수행하지 않습니다.</div>
+  <h2>장애 시나리오 선택</h2>
+  <div class="choices" role="group" aria-label="장애 시나리오">
+    <button type="button" data-scenario="healthy" aria-pressed="false">정상 운영</button>
+    <button type="button" data-scenario="api" aria-pressed="false">API 오류</button>
+    <button type="button" data-scenario="database" aria-pressed="false">DB 연결 실패</button>
+    <button type="button" data-scenario="queue" aria-pressed="false">Redis 큐 적체</button>
+  </div>
+  <div class="grid">
+    <section class="panel wide" aria-live="polite"><span class="tag">분석 결과</span><div id="status">시나리오를 선택해 주세요.</div></section>
+    <section class="panel"><h2>점검 보고서</h2><pre id="report">분석을 시작하면 이곳에 점검 순서가 표시됩니다.</pre></section>
+    <section class="panel"><h2>관측 로그</h2><pre id="logs">로그 대기 중</pre></section>
+    <section class="panel wide"><h2>상태 지표</h2><pre id="metrics">-</pre></section>
+  </div>
+  <p>API 명세는 <a href="/docs">/docs</a>에서 확인할 수 있습니다. 선택적으로 LLM 설명을 추가할 수 있지만 기본 동작은 규칙 기반입니다.</p>
+</main>
+</body>
+</html>
